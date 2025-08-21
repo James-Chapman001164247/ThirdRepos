@@ -39,11 +39,18 @@ namespace Ticketing
                 { mSection = 2; }
             if (radBox.Checked)
                 { mSection = 3; }
+            if (radBackStall.Checked)
+                { mSection = 4; }
 
             mTicketPrice = new TicketPrice(mSection, mQuantity, mDiscount);
 
             mTicketPrice.calculatePrice();
             lblAmount.Text = System.Convert.ToString(mTicketPrice.AmountDue);
         }
-     }
+
+        private void txtQuantity_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+    }
 }
