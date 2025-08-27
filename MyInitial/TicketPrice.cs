@@ -5,19 +5,26 @@ using System.Text;
 
 namespace Ticketing
 {
+    public enum DiscountType
+    {
+        None,
+        Senior,
+        Child
+    }
     public class TicketPrice
     {
         private int section;
         private int quantity;
-        private bool discount;
+        private DiscountType discountType;
         private decimal amountDue;
         private decimal mPrice;
 
         const decimal mdecBalcony = 35.5m;
         const decimal mdecGeneral = 28.75m;
         const decimal mdecBox = 62.0m;
-        const decimal mbackstall = 15.0m;
-        const decimal mdecDiscount = 5.0m; 
+        const decimal mdecDiscount = 5.0m;
+        const decimal mdecChildDiscount = 10.0m;
+        const decimal mbackstall = 15.0m; 
 
         private int Section
         {
@@ -31,11 +38,6 @@ namespace Ticketing
             set { quantity = value; }
         }
 
-         private bool Discount
-        {
-            get { return discount; }
-            set { discount = value; }
-        }
 
          public decimal AmountDue
         {
@@ -43,12 +45,13 @@ namespace Ticketing
             set { amountDue = value; }
         }
 
+
     // Constructor for TcicketPrice
-    public TicketPrice(int section, int quantity, bool discount)
+    public TicketPrice(int section, int quantity, DiscountType discountType)
     {
         Section = section;
         Quantity = quantity;
-        Discount = discount;
+        this.discountType = discountType;
         AmountDue = amountDue;
     }
 
@@ -70,8 +73,16 @@ namespace Ticketing
                  mPrice = mbackstall;
                  break;
          }
-         if (discount)
-         { mPrice -= mdecDiscount; }
+            switch (discountType)
+            {
+                case DiscountType.Senior:
+                    mPrice -= mdecDiscount;
+                    break;
+                case DiscountType.Child:
+                    mPrice -= mdecChildDiscount;
+                    break;
+
+            }
 
          AmountDue = mPrice * quantity;
 

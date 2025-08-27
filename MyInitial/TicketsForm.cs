@@ -42,7 +42,11 @@ namespace Ticketing
             if (radBackStall.Checked)
                 { mSection = 4; }
 
-            mTicketPrice = new TicketPrice(mSection, mQuantity, mDiscount);
+            DiscountType discountType = DiscountType.None;
+            if (chkDiscount.Checked) discountType = DiscountType.Senior;
+            if (childDiscount.Checked) discountType = DiscountType.Child;
+
+            mTicketPrice = new TicketPrice(mSection, mQuantity, discountType);
 
             mTicketPrice.calculatePrice();
             lblAmount.Text = System.Convert.ToString(mTicketPrice.AmountDue);
